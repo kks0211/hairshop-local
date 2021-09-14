@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hairshop.mapper.BizMemberMapper">
+
+    <resultMap type="BizMemberVO" id="memberMap">
+        <id property="bizemail" column="bizemail"/>
+        <result property="bizemail" column="bizemail"/>
+        <result property="bizpw" column="bizpw"/>
+        <result property="bizname" column="bizname"/>
+        <result property="biztel" column="biztel"/>
+        <collection property="authList" resultMap="authMap"></collection>
+    </resultMap>
+
+    <resultMap type="AuthVO" id="authMap">
+        <result property="bizemail" column="bizemail"/>
+        <result property="auth" column="auth"/>
+    </resultMap>
+
+    <insert id="joinUser">
+        insert into bizmember
+            (bizemail, bizpw, bizname, biztel, auth)
+        values (#{bizemail}, #{bizpw}, #{bizname}, #{biztel}, #{auth})
+    </insert>
+
+    <select id="findByEmail" resultMap="memberMap">
+        select bizemail, bizpw, bizname, biztel, auth
+        from bizmember
+        where bizemail = #{bizemail}
+    </select>
+
+</mapper>

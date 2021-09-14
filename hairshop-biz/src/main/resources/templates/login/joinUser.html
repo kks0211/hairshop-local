@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>board</title>
+</head>
+
+<body>
+
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+    <th:block th:fragment="content">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <div class="login-panel panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">회원 가입</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form role="form" method='post' action="/joinUser">
+                                <fieldset>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="Email"
+                                               name="bizemail" id="bizemail" type="email" value="test@test.com" autofocus>
+                                    </div>
+                                    <div>
+                                        <button id="emailCheck" onclick="emailSend()">인증번호 요청</button>
+                                    </div>
+                                    <div>
+                                        <input th:type="text" th:class="form-control" th:id="cfNumber" th:text="인증번호">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="Password"
+                                               name="bizpw" type="password" value="test00">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="username"
+                                               name="bizname" type="text" value="test">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="tel"
+                                               name="biztel" type="text" value="01024509037">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="radio" name="auth" value="ROLE_MEMBER" th:text="기업회원" th:checked="true">
+                                        <input type="radio" name="auth" value="ROLE_MEMBER" th:text="일반회원">
+                                    </div>
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    <!-- Change this to a button or input when using this as a form -->
+                                    <button type="submit" class="btn btn-lg btn-success btn-block">Join</button>
+                                </fieldset>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </th:block>
+</th:block>
+
+
+<script>
+
+    $(".btn-success").on("click", function (e) {
+
+        e.preventDefault();
+        $("form").submit();
+
+    });
+
+    function emailSend(){
+        let clientEmail = document.getElementById('bizemail').value;
+        let emailYN = isEmail(clientEmail);
+
+        console.log('=========> ' + clientEmail);
+
+        if(emailYN == true){
+            $.ajax({
+                type: "post",
+                url: "/",
+                data: {
+                    bizemail:clientEmail
+                },
+                success: function (data){
+
+                },
+                error: function (e) {
+                    alert('오류입니다.')
+                }
+
+            })
+        } else {
+            alert('email 형식이 아닙니다.');
+        }
+
+    }
+
+    function isEmail(asValue){
+        const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+        return regExp.test(asValue);
+    }
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,11 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+    }
+}
+rootProject.name = 'hairshop'
+include 'hairshop-core'
+include 'hairshop-admin'
+include 'hairshop-biz'
+include 'hairshop-web'
+
