@@ -7,5 +7,5 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class EmailController {
 
     @PostMapping("/login/email")
-    public String 
+    public String
 }
