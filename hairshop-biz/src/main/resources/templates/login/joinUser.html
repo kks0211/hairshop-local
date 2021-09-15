@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>board</title>
+    <title>Join</title>
 </head>
 
 <body>
@@ -22,13 +22,17 @@
                                 <fieldset>
                                     <div class="form-group">
                                         <input class="form-control" placeholder="Email"
-                                               name="bizemail" id="bizemail" type="email" value="test@test.com" autofocus>
+                                               name="bizemail" id="bizemail" type="email" value="test@test.com"
+                                               autofocus>
                                     </div>
                                     <div>
-                                        <button id="emailCheck" onclick="emailSend()">인증번호 요청</button>
+                                        <!--<button id="emailCheck" onclick="emailSend()">인증번호 요청</button>-->
+                                        <a href="#" class="btn btn-lg btn-block" th:id="emailCheck">인증번호 요청</a>
                                     </div>
                                     <div>
-                                        <input th:type="text" th:class="form-control" th:id="cfNumber" th:text="인증번호">
+                                        <input th:type="text" th:class="form-control" th:id="cfNumber">
+                                        <a href="#" class="btn btn-lg btn-block" th:id="emailCertification">인증하기</a>
+                                        <input th:type="hidden" th:id="certificateYN" th:value="false">
                                     </div>
                                     <div class="form-group">
                                         <input class="form-control" placeholder="Password"
@@ -43,12 +47,11 @@
                                                name="biztel" type="text" value="01024509037">
                                     </div>
                                     <div class="form-group">
-                                        <input type="radio" name="auth" value="ROLE_MEMBER" th:text="기업회원" th:checked="true">
-                                        <input type="radio" name="auth" value="ROLE_MEMBER" th:text="일반회원">
+                                        <input type="radio" name="auth" value="ROLE_MEMBER" th:text="기업회원"
+                                               th:checked="true">
                                     </div>
-                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                    <!-- Change this to a button or input when using this as a form -->
-                                    <button type="submit" class="btn btn-lg btn-success btn-block">Join</button>
+                                    <!--                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
+                                    <a href="#" class="btn btn-lg btn-success btn-block">회원가입</a>
                                 </fieldset>
                             </form>
 
@@ -65,26 +68,36 @@
 <script>
 
     $(".btn-success").on("click", function (e) {
-
         e.preventDefault();
         $("form").submit();
-
     });
 
-    function emailSend(){
+    $("#emailCheck").on("click", function (e) {
+        console.log('emailCheck');
+        e.preventDefault();
+        emailSend();
+    });
+
+    $("#emailCertification").on("click", function (e) {
+        console.log('emailCertification');
+        e.preventDefault();
+        emailCertification();
+    });
+
+    function emailSend() {
         let clientEmail = document.getElementById('bizemail').value;
         let emailYN = isEmail(clientEmail);
 
         console.log('=========> ' + clientEmail);
 
-        if(emailYN == true){
+        if (emailYN == true) {
             $.ajax({
                 type: "post",
-                url: "/",
+                url: "/login/email",
                 data: {
-                    bizemail:clientEmail
+                    email: clientEmail
                 },
-                success: function (data){
+                success: function (data) {
 
                 },
                 error: function (e) {
@@ -98,9 +111,37 @@
 
     }
 
-    function isEmail(asValue){
+    function isEmail(asValue) {
         const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
         return regExp.test(asValue);
+    }
+
+    function emailCertification() {
+        let clientEmail = document.getElementById('bizemail').value;
+        let CfNumber = document.getElementById('cfNumber').value;
+
+        console.log("인증번호 ===> " + CfNumber);
+
+        $.ajax({
+            type: "post",
+            url: "/login/emailCert",
+            data: {
+                email: clientEmail,
+                CfNumber: CfNumber
+            },
+            success: function (result) {
+                if (result) {
+                    alert("인증 완료");
+                    document.getElementById('certificateYN').value = "true";
+                    clientEmail.onchange = function () {
+                        document.getElementById('certificateYN').value = "false";
+                    }
+                } else {
+                    alert('인증번호를 확인해주세요.')
+                }
+            }
+
+        })
     }
 
 </script>
