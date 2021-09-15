@@ -26,9 +26,8 @@ public class EmailController {
 
     @PostMapping("/login/emailCert")
     @ResponseBody
-    public boolean emailCertificate(HttpServletRequest request, String email, String CfNumber) {
-        HttpSession session = request.getSession();
-        boolean result = mailSendService.emailCertification(session, email, Integer.parseInt(CfNumber));
+    public boolean emailCertificate(String email, String cf_no) {
+        boolean result = mailSendService.emailCertification(email, Integer.parseInt(cf_no));
         return result;
     }
 

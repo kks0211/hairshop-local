@@ -29,4 +29,22 @@
         where bizemail = #{bizemail}
     </select>
 
+    <insert id="mailCf">
+        insert into mail_cf (email, cf_no, reg_date)
+        values (#{email}, #{cf_no}, now())
+    </insert>
+
+    <delete id="deleteCf">
+        delete
+        from mail_cf
+        where email = #{email}
+    </delete>
+
+    <select id="readCf" resultType="int">
+        select count(*)
+        from mail_cf
+        where email = #{email}
+          and cf_no = #{cf_no}
+    </select>
+
 </mapper>

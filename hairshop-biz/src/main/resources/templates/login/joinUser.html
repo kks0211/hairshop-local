@@ -30,7 +30,7 @@
                                         <a href="#" class="btn btn-lg btn-block" th:id="emailCheck">인증번호 요청</a>
                                     </div>
                                     <div>
-                                        <input th:type="text" th:class="form-control" th:id="cfNumber">
+                                        <input th:type="text" th:class="form-control" th:id="cf_no">
                                         <a href="#" class="btn btn-lg btn-block" th:id="emailCertification">인증하기</a>
                                         <input th:type="hidden" th:id="certificateYN" th:value="false">
                                     </div>
@@ -92,15 +92,15 @@
 
         if (emailYN == true) {
             $.ajax({
-                type: "post",
-                url: "/login/email",
-                data: {
+                type   : "post",
+                url    : "/login/email",
+                data   : {
                     email: clientEmail
                 },
                 success: function (data) {
 
                 },
-                error: function (e) {
+                error  : function (e) {
                     alert('오류입니다.')
                 }
 
@@ -118,16 +118,16 @@
 
     function emailCertification() {
         let clientEmail = document.getElementById('bizemail').value;
-        let CfNumber = document.getElementById('cfNumber').value;
+        let cf_no = document.getElementById('cf_no').value;
 
-        console.log("인증번호 ===> " + CfNumber);
+        console.log("인증번호 ===> " + cf_no);
 
         $.ajax({
-            type: "post",
-            url: "/login/emailCert",
-            data: {
-                email: clientEmail,
-                CfNumber: CfNumber
+            type   : "post",
+            url    : "/login/emailCert",
+            data   : {
+                email   : clientEmail,
+                cf_no: cf_no
             },
             success: function (result) {
                 if (result) {
