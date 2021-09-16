@@ -1,49 +1,59 @@
 package com.example.hairshop.service;
 
 import com.example.hairshop.mapper.BizMemberMapper;
-import com.example.hairshop.util.MailHandler;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import javax.mail.MessagingException;
-import javax.servlet.http.HttpSession;
+import javax.mail.internet.MimeMessage;
 import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
 public class MailSendService {
 
-    private final JavaMailSenderImpl JavaMailSenderImpl;
+    private final JavaMailSender javaMailSender;
+
+    private final SpringTemplateEngine templateEngine;
 
     private final BizMemberMapper bizMemberMapper;
 
-    public void mailSend(HttpSession session, String email) throws MessagingException {
+    public void mailSend(String email) throws MessagingException {
         try {
-            MailHandler handler = new MailHandler(JavaMailSenderImpl);
+
+            MimeMessage message = javaMailSender.createMimeMessage();
+
+            // String code = createCode(); // 인증코드 생성
             Random random = new Random(System.currentTimeMillis());
             long start = System.currentTimeMillis();
-
             int cf_no = 100000 + random.nextInt(900000);
 
-            handler.setTo(email);
-            handler.setFrom("dev.kks0211@gmail.com");
-            handler.setSubject("인증번호 발송되었습니다.");
+            message.addRecipients(MimeMessage.RecipientType.TO, email);
+            message.setSubject("인증 번호가 발송되었습니다.");
+            message.setText(setContext(cf_no), "utf-8", "html");
 
-            String mailContent = "<p>인증 번호 " + cf_no + "</p>";
-            handler.setText(mailContent, true);
-            handler.send();
+            javaMailSender.send(message);
 
             long end = System.currentTimeMillis();
-            session.setAttribute("" + email, cf_no);
+            //session.setAttribute("" + email, cf_no);
             System.out.println("발송 완료 : " + (end - start) / 1000.0);
 
-            bizMemberMapper.mailCf(email, cf_no);
+            //bizMemberMapper.mailCf(email, cf_no);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    private String setContext(int cf_no) {
+        Context context = new Context();
+        context.setVariable("code", cf_no);
+        return templateEngine.process("/mailTemplate/mail", context);
+    }
+
 
     public boolean emailCertification(String email, int cf_no) {
         int result = bizMemberMapper.readCf(email, cf_no);

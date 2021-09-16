@@ -17,10 +17,11 @@ public class EmailController {
     private MailSendService mailSendService;
 
     @PostMapping("/login/email")
-    public String emailCheck(HttpServletRequest request, String email) throws MessagingException {
+    public String emailCheck(String email) throws MessagingException {
         System.out.println("=== email ===> " + email);
-        HttpSession session = request.getSession();
-        mailSendService.mailSend(session, email);
+        //HttpSession session = request.getSession();
+        //mailSendService.mailSend(session, email);
+        mailSendService.mailSend(email);
         return "/login/joinUser";
     }
 
