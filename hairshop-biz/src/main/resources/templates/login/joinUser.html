@@ -22,7 +22,7 @@
                                 <fieldset>
                                     <div class="form-group">
                                         <input class="form-control" placeholder="Email"
-                                               name="bizemail" id="bizemail" type="email" value="test@test.com"
+                                               name="email" id="email" type="email" value="test@test.com"
                                                autofocus>
                                     </div>
                                     <div>
@@ -36,21 +36,21 @@
                                     </div>
                                     <div class="form-group">
                                         <input class="form-control" placeholder="Password"
-                                               name="bizpw" type="password" value="test00">
+                                               name="password" type="password" value="test00">
                                     </div>
                                     <div class="form-group">
                                         <input class="form-control" placeholder="username"
-                                               name="bizname" type="text" value="test">
+                                               name="name" type="text" value="test">
                                     </div>
                                     <div class="form-group">
                                         <input class="form-control" placeholder="tel"
-                                               name="biztel" type="text" value="01024509037">
+                                               name="tel" type="text" value="01024509037">
                                     </div>
                                     <div class="form-group">
                                         <input type="radio" name="auth" value="ROLE_MEMBER" th:text="기업회원"
                                                th:checked="true">
                                     </div>
-                                    <!--                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
+                                    <!-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                                     <a href="#" class="btn btn-lg btn-success btn-block">회원가입</a>
                                 </fieldset>
                             </form>
@@ -85,7 +85,7 @@
     });
 
     function emailSend() {
-        let clientEmail = document.getElementById('bizemail').value;
+        let clientEmail = document.getElementById('email').value;
         let emailYN = isEmail(clientEmail);
 
         console.log('=========> ' + clientEmail);
@@ -117,7 +117,7 @@
     }
 
     function emailCertification() {
-        let clientEmail = document.getElementById('bizemail').value;
+        let clientEmail = document.getElementById('email').value;
         let cf_no = document.getElementById('cf_no').value;
 
         console.log("인증번호 ===> " + cf_no);

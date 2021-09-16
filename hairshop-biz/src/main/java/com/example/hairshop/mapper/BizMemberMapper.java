@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface BizMemberMapper {
 
-    BizMemberVO findByEmail(String bizemail);
+    BizMemberVO findByEmail(String email);
 
     int joinUser(BizMemberVO vo);
 

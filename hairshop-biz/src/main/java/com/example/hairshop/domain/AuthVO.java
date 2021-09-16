@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class AuthVO {
 
-  private String bizemail;
+  private String email;
   private String auth;
   
 }

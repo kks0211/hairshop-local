@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @Controller
 @AllArgsConstructor
@@ -18,9 +16,6 @@ public class EmailController {
 
     @PostMapping("/login/email")
     public String emailCheck(String email) throws MessagingException {
-        System.out.println("=== email ===> " + email);
-        //HttpSession session = request.getSession();
-        //mailSendService.mailSend(session, email);
         mailSendService.mailSend(email);
         return "/login/joinUser";
     }

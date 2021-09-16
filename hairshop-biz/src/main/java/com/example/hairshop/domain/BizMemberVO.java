@@ -11,10 +11,10 @@ import java.util.List;
 @AllArgsConstructor
 public class BizMemberVO {
 
-    private String bizemail;
-    private String bizpw;
-    private String bizname;
-    private String biztel;
+    private String email;
+    private String password;
+    private String name;
+    private String tel;
     private String auth;
 
     private List<AuthVO> authList;

@@ -1,6 +1,5 @@
 package com.example.hairshop.controller;
 
-import com.example.hairshop.biz.BizMember;
 import com.example.hairshop.domain.BizMemberVO;
 import com.example.hairshop.service.BizMemberService;
 import lombok.AllArgsConstructor;

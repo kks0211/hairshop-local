@@ -4,29 +4,29 @@
 <mapper namespace="com.example.hairshop.mapper.BizMemberMapper">
 
     <resultMap type="BizMemberVO" id="memberMap">
-        <id property="bizemail" column="bizemail"/>
-        <result property="bizemail" column="bizemail"/>
-        <result property="bizpw" column="bizpw"/>
-        <result property="bizname" column="bizname"/>
-        <result property="biztel" column="biztel"/>
+        <id property="email" column="email"/>
+        <result property="email" column="email"/>
+        <result property="password" column="password"/>
+        <result property="name" column="name"/>
+        <result property="tel" column="tel"/>
         <collection property="authList" resultMap="authMap"></collection>
     </resultMap>
 
     <resultMap type="AuthVO" id="authMap">
-        <result property="bizemail" column="bizemail"/>
+        <result property="email" column="email"/>
         <result property="auth" column="auth"/>
     </resultMap>
 
     <insert id="joinUser">
-        insert into bizmember
-            (bizemail, bizpw, bizname, biztel, auth)
-        values (#{bizemail}, #{bizpw}, #{bizname}, #{biztel}, #{auth})
+        insert into biz_member
+            (email, password, name, tel, auth)
+        values (#{email}, #{password}, #{name}, #{tel}, #{auth})
     </insert>
 
     <select id="findByEmail" resultMap="memberMap">
-        select bizemail, bizpw, bizname, biztel, auth
-        from bizmember
-        where bizemail = #{bizemail}
+        select email, password, name, tel, auth
+        from biz_member
+        where email = #{email}
     </select>
 
     <insert id="mailCf">

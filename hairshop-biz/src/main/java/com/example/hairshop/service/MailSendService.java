@@ -26,10 +26,8 @@ public class MailSendService {
 
             MimeMessage message = javaMailSender.createMimeMessage();
 
-            // String code = createCode(); // 인증코드 생성
-            Random random = new Random(System.currentTimeMillis());
+            int cf_no = createCode();
             long start = System.currentTimeMillis();
-            int cf_no = 100000 + random.nextInt(900000);
 
             message.addRecipients(MimeMessage.RecipientType.TO, email);
             message.setSubject("인증 번호가 발송되었습니다.");
@@ -38,7 +36,6 @@ public class MailSendService {
             javaMailSender.send(message);
 
             long end = System.currentTimeMillis();
-            //session.setAttribute("" + email, cf_no);
             System.out.println("발송 완료 : " + (end - start) / 1000.0);
 
             //bizMemberMapper.mailCf(email, cf_no);
@@ -66,22 +63,12 @@ public class MailSendService {
 
     }
 
-    /*public boolean emailCertification(HttpSession session, String email, int cf_no) {
-        try {
-            int generationCode = (int) session.getAttribute(email);
+    public int createCode() {
+        Random random = new Random(System.currentTimeMillis());
+        int cf_no = 100000 + random.nextInt(900000);
 
-            if (generationCode == cf_no) {
-                bizMemberMapper.deleteCf(email);
-                return true;
-            } else {
-                return false;
-            }
-
-        } catch (Exception e) {
-            throw e;
-        }
-    }*/
-
+        return cf_no;
+    }
 
 }
 
