@@ -16,6 +16,7 @@ public class BizMemberVO {
     private String name;
     private String tel;
     private String auth;
+    private String emailYn;
 
     private List<AuthVO> authList;
 

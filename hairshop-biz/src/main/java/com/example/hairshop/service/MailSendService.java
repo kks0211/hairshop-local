@@ -47,10 +47,17 @@ public class MailSendService {
 
     private String setContext(int cf_no) {
         Context context = new Context();
-        context.setVariable("code", cf_no);
+        context.setVariable("cf_no", cf_no);
         return templateEngine.process("/mailTemplate/mail", context);
     }
 
+
+    public int createCode() {
+        Random random = new Random(System.currentTimeMillis());
+        int cf_no = 100000 + random.nextInt(900000);
+
+        return cf_no;
+    }
 
     public boolean emailCertification(String email, int cf_no) {
         int result = bizMemberMapper.readCf(email, cf_no);
@@ -61,13 +68,6 @@ public class MailSendService {
             return false;
         }
 
-    }
-
-    public int createCode() {
-        Random random = new Random(System.currentTimeMillis());
-        int cf_no = 100000 + random.nextInt(900000);
-
-        return cf_no;
     }
 
 }

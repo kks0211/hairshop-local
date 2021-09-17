@@ -32,7 +32,7 @@
                                     <div>
                                         <input th:type="text" th:class="form-control" th:id="cf_no">
                                         <a href="#" class="btn btn-lg btn-block" th:id="emailCertification">인증하기</a>
-                                        <input th:type="hidden" th:id="certificateYN" th:value="false">
+                                        <input th:type="hidden" th:id="emailYn" th:value="N">
                                     </div>
                                     <div class="form-group">
                                         <input class="form-control" placeholder="Password"
@@ -98,7 +98,7 @@
                     email: clientEmail
                 },
                 success: function (data) {
-
+                    alert('인증 메일을 발송하였습니다. ' + data)
                 },
                 error  : function (e) {
                     alert('오류입니다.')
@@ -127,14 +127,14 @@
             url    : "/login/emailCert",
             data   : {
                 email   : clientEmail,
-                cf_no: cf_no
+                cf_no   : cf_no
             },
             success: function (result) {
                 if (result) {
                     alert("인증 완료");
-                    document.getElementById('certificateYN').value = "true";
+                    document.getElementById('emailYn').value = "Y";
                     clientEmail.onchange = function () {
-                        document.getElementById('certificateYN').value = "false";
+                        document.getElementById('emailYn').value = "N";
                     }
                 } else {
                     alert('인증번호를 확인해주세요.')
