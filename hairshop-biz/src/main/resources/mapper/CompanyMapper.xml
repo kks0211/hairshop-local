@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hairshop.mapper.CompanyMapper">
+
+    <insert id="write">
+        insert into company (member_no, name, address, irs, site, descript, reg_date, update_date)
+        values (#{member_no}, #{name}, #{address}, #{irs}, #{site}, #{descript}, now(), now())
+    </insert>
+
+</mapper>

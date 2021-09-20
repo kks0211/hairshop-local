@@ -9,7 +9,7 @@
 
 <th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
     <th:block th:fragment="content">
-
+        <br>
         <div class="container">
             <div class="row">
                 <div class="col-md-4 col-md-offset-4">
@@ -24,6 +24,10 @@
                                         <input class="form-control" placeholder="Email"
                                                name="email" id="email" type="email" value="test@test.com"
                                                autofocus>
+                                        <span th:text="${valid_email}"></span>
+                                        <!--<input class="form-control" placeholder="Email"
+                                               name="email" id="email" type="email" value="${member.email}"
+                                               autofocus>-->
                                     </div>
                                     <div>
                                         <!--<button id="emailCheck" onclick="emailSend()">인증번호 요청</button>-->
@@ -32,19 +36,24 @@
                                     <div>
                                         <input th:type="text" th:class="form-control" th:id="cf_no">
                                         <a href="#" class="btn btn-lg btn-block" th:id="emailCertification">인증하기</a>
-                                        <input th:type="hidden" th:id="emailYn" th:value="N">
+                                        <!-- AJAX 로 수정-->
+                                        <input th:type="hidden" th:id="emailYn" th:name="emailYn" th:value="${member.emailYn} == null ? 'N' : 'Y'">
                                     </div>
                                     <div class="form-group">
-                                        <input class="form-control" placeholder="Password"
-                                               name="password" type="password" value="test00">
+                                        <!--<input class="form-control" placeholder="Password" name="password" type="password" value="test00">-->
+                                        <input class="form-control" placeholder="Password" name="password" type="password"
+                                               th:value="${member.password}">
+                                        <span th:text="${valid_password}"></span>
                                     </div>
                                     <div class="form-group">
                                         <input class="form-control" placeholder="username"
                                                name="name" type="text" value="test">
+                                        <span th:text="${valid_name}"></span>
                                     </div>
                                     <div class="form-group">
                                         <input class="form-control" placeholder="tel"
                                                name="tel" type="text" value="01024509037">
+                                        <span th:text="${valid_tel}"></span>
                                     </div>
                                     <div class="form-group">
                                         <input type="radio" name="auth" value="ROLE_MEMBER" th:text="기업회원"
@@ -64,12 +73,19 @@
     </th:block>
 </th:block>
 
-
 <script>
 
     $(".btn-success").on("click", function (e) {
-        e.preventDefault();
-        $("form").submit();
+
+        let emailValid = document.getElementById('emailYn').value;
+
+        if (emailValid == 'Y') {
+            e.preventDefault();
+            $("form").submit();
+        } else {
+            alert("이메일 인증이 필요합니다.")
+        }
+
     });
 
     $("#emailCheck").on("click", function (e) {
@@ -86,11 +102,11 @@
 
     function emailSend() {
         let clientEmail = document.getElementById('email').value;
-        let emailYN = isEmail(clientEmail);
+        let emailValid = isEmail(clientEmail);
 
         console.log('=========> ' + clientEmail);
 
-        if (emailYN == true) {
+        if (emailValid == true) {
             $.ajax({
                 type   : "post",
                 url    : "/login/email",
@@ -98,7 +114,7 @@
                     email: clientEmail
                 },
                 success: function (data) {
-                    alert('인증 메일을 발송하였습니다. ' + data)
+                    alert('인증 메일을 발송하였습니다.')
                 },
                 error  : function (e) {
                     alert('오류입니다.')
@@ -126,8 +142,8 @@
             type   : "post",
             url    : "/login/emailCert",
             data   : {
-                email   : clientEmail,
-                cf_no   : cf_no
+                email: clientEmail,
+                cf_no: cf_no
             },
             success: function (result) {
                 if (result) {
@@ -140,7 +156,6 @@
                     alert('인증번호를 확인해주세요.')
                 }
             }
-
         })
     }
 

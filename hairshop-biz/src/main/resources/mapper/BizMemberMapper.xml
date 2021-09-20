@@ -19,8 +19,8 @@
 
     <insert id="joinUser">
         insert into biz_member
-            (email, password, name, tel, auth)
-        values (#{email}, #{password}, #{name}, #{tel}, #{auth})
+            (email, password, name, tel, auth, email_yn, reg_date, update_date)
+        values (#{email}, #{password}, #{name}, #{tel}, #{auth}, #{emailYn}, now(), now())
     </insert>
 
     <select id="findByEmail" resultMap="memberMap">

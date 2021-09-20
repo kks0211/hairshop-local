@@ -1,7 +1,10 @@
 package com.example.hairshop.service;
 
+import com.example.hairshop.domain.BizMemberVO;
 import com.example.hairshop.mapper.BizMemberMapper;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
@@ -21,6 +24,8 @@ public class MailSendService {
 
     private final BizMemberMapper bizMemberMapper;
 
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
     public void mailSend(String email) throws MessagingException {
         try {
 
@@ -36,14 +41,19 @@ public class MailSendService {
             javaMailSender.send(message);
 
             long end = System.currentTimeMillis();
-            System.out.println("발송 완료 : " + (end - start) / 1000.0);
+            log.info("발송 완료 : {}", (end - start) / 1000.0);
 
-            //bizMemberMapper.mailCf(email, cf_no);
+            bizMemberMapper.mailCf(email, cf_no);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    public BizMemberVO findEmail(String email) {
+        return bizMemberMapper.findByEmail(email);
+    }
+
 
     private String setContext(int cf_no) {
         Context context = new Context();
@@ -55,7 +65,6 @@ public class MailSendService {
     public int createCode() {
         Random random = new Random(System.currentTimeMillis());
         int cf_no = 100000 + random.nextInt(900000);
-
         return cf_no;
     }
 
@@ -67,7 +76,6 @@ public class MailSendService {
         } else {
             return false;
         }
-
     }
 
 }

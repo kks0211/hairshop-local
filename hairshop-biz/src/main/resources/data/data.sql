@@ -2,10 +2,10 @@ create table biz_member
 (
     member_no   serial primary key,
     email       varchar(100) not null,
-    password    varchar(100) not null,
+    password    varchar(150) not null,
     name        varchar(100) not null,
     tel         varchar(20)  not null,
-    auth        varchar(10)  not null,
+    auth        varchar(20)  not null,
     email_yn    varchar(1)   not null,
     del_flag    varchar(1)   not null default 'N',
     reg_date    timestamp    not null,
