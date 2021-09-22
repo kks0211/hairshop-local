@@ -18,6 +18,7 @@ create table company
     member_no   int not null,
     name       varchar(100) not null,
     address    varchar(2000) not null,
+    address_detail    varchar(1000) not null,
     irs        varchar(12) not null,
     site         varchar(1000)  not null,
     descript        varchar(3000)  not null,

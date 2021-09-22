@@ -16,7 +16,6 @@ public class EmailController {
     private MailSendService mailSendService;
 
     // 이메일 인증 요청
-    @Transactional
     @PostMapping("/login/email")
     public String emailCheck(String email, BizMemberVO vo, Model model) throws Exception {
 

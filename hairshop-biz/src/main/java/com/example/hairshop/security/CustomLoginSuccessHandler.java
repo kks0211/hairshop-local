@@ -29,7 +29,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 
         });
 
-        log.info("==== login success ===> {}", roleNames);
+        log.info("login success : {}", roleNames);
 
         if (roleNames.contains("ROLE_ADMIN")) {
 

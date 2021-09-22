@@ -4,8 +4,8 @@
 <mapper namespace="com.example.hairshop.mapper.CompanyMapper">
 
     <insert id="write">
-        insert into company (member_no, name, address, irs, site, descript, reg_date, update_date)
-        values (#{member_no}, #{name}, #{address}, #{irs}, #{site}, #{descript}, now(), now())
+        insert into company (member_no, name, address, address_detail ,irs, site, descript, reg_date, update_date)
+        values (#{memberNo}, #{name}, #{address}, #{addressDetail}, #{irs}, #{site}, #{descript}, now(), now())
     </insert>
 
 </mapper>
