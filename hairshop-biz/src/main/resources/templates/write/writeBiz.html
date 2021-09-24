@@ -47,7 +47,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>기업소개</label>
-                                        <textarea th:class="form-control" placeholder="기업소개" name="descript" ></textarea>
+                                        <textarea th:class="form-control" placeholder="기업소개" name="descript"></textarea>
                                         <span th:text="${valid_descript}"></span>
                                     </div>
                                     <div class="form-group">
@@ -68,10 +68,33 @@
 
     </th:block>
 </th:block>
-
 <script>
+    $(document).ready(function () {
+        // event
+        $("#addressSearch").on("click", f.addressSearch());
+        $(".btn-success").on("click", d.send());
+    });
 
-    $("#addressSearch").on("click", function (e) {
+    const f = {
+        addressSearch: function () {
+            new daum.Postcode({
+                oncomplete: function (data) { //선택시 입력값 세팅
+                    document.getElementById("address").value = data.address; // 주소 넣기
+                    document.querySelector("input[name=addressDetail]").focus(); //상세입력 포커싱
+                }
+            }).open();
+        }
+    }
+
+    const d = {
+        send: function () {
+            $("form").submit();
+        }
+    }
+</script>
+<script type="text/javascript">
+
+    /*$("#addressSearch").on("click", function (e) {
         console.log('address');
         new daum.Postcode({
             oncomplete: function (data) { //선택시 입력값 세팅
@@ -79,11 +102,11 @@
                 document.querySelector("input[name=addressDetail]").focus(); //상세입력 포커싱
             }
         }).open();
-    });
+    });*/
 
-    $(".btn-success").on("click", function (e) {
+    /*$(".btn-success").on("click", function (e) {
         $("form").submit();
-    });
+    });*/
 
 </script>
 
